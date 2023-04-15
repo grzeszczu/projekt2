@@ -17,6 +17,7 @@ class Stacja
     deque <char> cel3;
     deque <char> cel4;
     deque <char> cel5;
+    int wynik;
     char tor1[4] = {'A','A','B','B'};
     char tor2[4] = {'A','B','A','B'};
     char tor3[3] = {'C','D','D'};
@@ -66,6 +67,27 @@ class Stacja
         cout << setw(31) << char(92) << char(92) << " (5)" << endl;
         cout << setw(32) << char(92) << char(92) << "=====================";
         cout << " Tor 5: [CDD]" << endl;
+    }
+    void Rozgrywka() {
+        wynik = 0;
+    }
+    
+    void  AktualnyWynik() {
+        if (wynik >= 50) {
+            cout << "Gratulacje! Wygrałeś!" << wynik << endl;
+        }
+        else if (wynik < 0) {
+            cout << "Przegrałeś. Twój wynik jest mniejszy niż 0." << wynik << endl;
+        }
+        else {
+            cout << "Twój aktualny wynik to: " << wynik << endl;
+        }
+    }
+    void PoprawneSkompletowanie() {
+        wynik += 10;
+    }
+    void BledneSkompletowanie() {
+        wynik -= 10;
     }
 };
 
