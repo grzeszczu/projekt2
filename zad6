@@ -1,0 +1,68 @@
+#include <iostream>
+#include <deque>
+#include <cstdlib>
+#include <ctime>
+#include <iomanip>
+
+
+using namespace std;
+
+class Stacja
+{
+    private:
+
+    deque <char> pociag;
+    deque <char> cel1;
+    deque <char> cel2;
+    deque <char> cel3;
+    deque <char> cel4;
+    deque <char> cel5;
+    char tor1[4] = {'A','A','B','B'};
+    char tor2[4] = {'A','B','A','B'};
+    char tor3[3] = {'C','D','D'};
+    char tor4[4] = {'A','B','B','C'};
+    char tor5[3] = {'C','D','D'};
+
+    public:
+
+    void generowanie()
+    {
+        srand( time( NULL ) );
+        for(int i=0; i<15; i++)
+        {
+            int losowa = ((rand()%4)+65);
+            pociag.push_front(char(losowa));
+        }
+    }
+
+    void wyswietlanie()
+    {
+        for(long long unsigned int i=0; i<pociag.size(); i++)
+        {
+            cout << pociag[i];
+        }
+        cout << " ======================================";
+        cout << " Tor 1: [AABB]" << endl;
+        cout << setw(25) << char(92) << char(92) << " (2)" << endl;
+        cout << setw(26) << char(92) << char(92) << "===========================";
+        cout << " Tor 2: [ABAB]" << endl;
+        cout << setw(27) << char(92) << char(92) << " (3)" << endl;
+        cout << setw(28) << char(92) << char(92) << "=========================";
+        cout << " Tor 3: [CDD]" << endl;
+        cout << setw(29) << char(92) << char(92) << " (4)" << endl;
+        cout << setw(30) << char(92) << char(92) << "=======================";
+        cout << " Tor 4: [ABBC]" << endl;
+        cout << setw(31) << char(92) << char(92) << " (5)" << endl;
+        cout << setw(32) << char(92) << char(92) << "=====================";
+        cout << " Tor 5: [CDD]" << endl;
+    }
+};
+
+int main()
+{
+    Stacja Kolejarz;
+    Kolejarz.generowanie();
+    Kolejarz.wyswietlanie();
+
+    return 0;
+}
