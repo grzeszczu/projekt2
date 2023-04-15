@@ -45,6 +45,7 @@ class Stacja
         cout << endl;
         cout << "Wygrasz gdy osiagniesz 50 pkt" << endl;
         cout << "Przegrasz gdy liczba punktow bedzie mniejsza od 0" << endl;
+        cout << "Wyjscie z gry - wcisnij (0)" << endl;
         cout << "POWODZENIA !!!" << endl;
         cout << endl;
         for(long long unsigned int i=0; i<pociag.size(); i++)
@@ -74,24 +75,31 @@ int main()
     Kolejarz.generowanie();
     Kolejarz.wyswietlanie();
     int opcja;
-    do {
+  do {
         cin >> opcja;
-    } while (opcja < 2 || opcja > 5);
 
-    switch (opcja) {
-    case 2:
-        cout << "Wybrano opcję 2" << endl;
-        break;
-    case 3:
-        cout << "Wybrano opcję 3" << endl;
-        break;
-    case 4:
-        cout << "Wybrano opcję 4" << endl;
-        break;
-    case 5:
-        cout << "Wybrano opcję 5" << endl;
-        break;
-    }
+        switch (opcja) {
+        case 2:
+            cout << "Wybrano opcję 2" << endl;
+            break;
+        case 3:
+            cout << "Wybrano opcję 3" << endl;
+            break;
+        case 4:
+            cout << "Wybrano opcję 4" << endl;
+            break;
+        case 5:
+            cout << "Wybrano opcję 5" << endl;
+            break;
+        case 0:
+            cout << "Koniec programu" << endl;
+            break;
+        default:
+            cout << "Nieprawidlowa opcja" << endl;
+            break;
+        }
 
+    } while (opcja != 0);
+    
     return 0;
 }
