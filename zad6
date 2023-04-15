@@ -37,6 +37,16 @@ class Stacja
 
     void wyswietlanie()
     {
+        cout << "Wybierz opcje zmiany toru (2-5)" << endl;
+        cout << "Wcisnij przycisk (W) aby zwolonic wagon." << endl;
+        cout << endl;
+        cout << "Za kazde poprawne skompletowanie toru otrzymasz 10pkt" << endl;
+        cout << "Kiedy będzie niemozliwe poprawne skompletowanie zostanie odjete 10 pkt" << endl;
+        cout << endl;
+        cout << "Wygrasz gdy osiagniesz 50 pkt" << endl;
+        cout << "Przegrasz gdy liczba punktow bedzie mniejsza od 0" << endl;
+        cout << "POWODZENIA !!!" << endl;
+        cout << endl;
         for(long long unsigned int i=0; i<pociag.size(); i++)
         {
             cout << pociag[i];
@@ -65,7 +75,6 @@ int main()
     Kolejarz.wyswietlanie();
     int opcja;
     do {
-        cout << "Wybierz opcje zmiany toru (2-5)"<< endl;
         cin >> opcja;
     } while (opcja < 2 || opcja > 5);
 
