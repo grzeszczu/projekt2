@@ -63,6 +63,26 @@ int main()
     Stacja Kolejarz;
     Kolejarz.generowanie();
     Kolejarz.wyswietlanie();
+    int opcja;
+    do {
+        cout << "Wybierz opcje zmiany toru (2-5)"<< endl;
+        cin >> opcja;
+    } while (opcja < 2 || opcja > 5);
+
+    switch (opcja) {
+    case 2:
+        cout << "Wybrano opcję 2" << endl;
+        break;
+    case 3:
+        cout << "Wybrano opcję 3" << endl;
+        break;
+    case 4:
+        cout << "Wybrano opcję 4" << endl;
+        break;
+    case 5:
+        cout << "Wybrano opcję 5" << endl;
+        break;
+    }
 
     return 0;
 }
