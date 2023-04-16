@@ -25,7 +25,9 @@ class Stacja
     char tor5[3] = {'C','D','D'};
 
     public:
-
+    Stacja(deque<char> nowy_pociag) {
+        pociag = nowy_pociag;
+    }
     void generowanie()
     {
         srand( time( NULL ) );
@@ -93,7 +95,8 @@ class Stacja
 
 int main()
 {
-    Stacja Kolejarz;
+    deque<char> dany_pociag = { 'C', 'A', 'D', 'B' };
+    Stacja Kolejarz(dany_pociag);
     Kolejarz.generowanie();
     Kolejarz.wyswietlanie();
     int opcja;
