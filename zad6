@@ -3,31 +3,36 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
-
+#include <conio.h>
 
 using namespace std;
+
+int main();
 
 class Stacja
 {
     private:
-
     deque <char> pociag;
     deque <char> cel1;
     deque <char> cel2;
     deque <char> cel3;
     deque <char> cel4;
     deque <char> cel5;
-    int wynik;
     char tor1[4] = {'A','A','B','B'};
-    char tor2[4] = {'A','B','A','B'};
-    char tor3[3] = {'C','D','D'};
-    char tor4[4] = {'A','B','B','C'};
-    char tor5[3] = {'C','D','D'};
+    char tor2[4] = {'D','B','A','B'};
+    char tor3[4] = {'C','D','C','D'};
+    char tor4[4] = {'A','B','C','C'};
+    char tor5[4] = {'C','D','D','A'};
+    char wybor1;
+    int punkty = 0;
+    void dostawa()
+    {
+            int losowa = ((rand()%4)+65);
+            pociag.push_front(char(losowa));
+    }
 
     public:
-    Stacja(deque<char> nowy_pociag) {
-        pociag = nowy_pociag;
-    }
+
     void generowanie()
     {
         srand( time( NULL ) );
@@ -40,91 +45,322 @@ class Stacja
 
     void wyswietlanie()
     {
-        cout << "Wybierz opcje zmiany toru (2-5)" << endl;
-        cout << "Wcisnij przycisk (W) aby zwolonic wagon." << endl;
-        cout << endl;
-        cout << "Za kazde poprawne skompletowanie toru otrzymasz 10pkt" << endl;
-        cout << "Kiedy będzie niemozliwe poprawne skompletowanie zostanie odjete 10 pkt" << endl;
-        cout << endl;
-        cout << "Wygrasz gdy osiagniesz 50 pkt" << endl;
-        cout << "Przegrasz gdy liczba punktow bedzie mniejsza od 0" << endl;
-        cout << "Wyjscie z gry - wcisnij (0)" << endl;
-        cout << "POWODZENIA !!!" << endl;
-        cout << endl;
+        cout << "Punkty: " << punkty << endl;
         for(long long unsigned int i=0; i<pociag.size(); i++)
         {
             cout << pociag[i];
         }
         cout << " ======================================";
+        for (long long unsigned int i=0; i<cel1.size(); i++)
+        {
+            cout << cel1[i];
+        }
         cout << " Tor 1: [AABB]" << endl;
         cout << setw(25) << char(92) << char(92) << " (2)" << endl;
         cout << setw(26) << char(92) << char(92) << "===========================";
-        cout << " Tor 2: [ABAB]" << endl;
+        for (long long unsigned int i=0; i<cel2.size(); i++)
+        {
+            cout << cel2[i];
+        }
+        cout << " Tor 2: [DBAB]" << endl;
         cout << setw(27) << char(92) << char(92) << " (3)" << endl;
         cout << setw(28) << char(92) << char(92) << "=========================";
-        cout << " Tor 3: [CDD]" << endl;
+        for (long long unsigned int i=0; i<cel3.size(); i++)
+        {
+            cout << cel3[i];
+        }
+        cout << " Tor 3: [CDCD]" << endl;
         cout << setw(29) << char(92) << char(92) << " (4)" << endl;
         cout << setw(30) << char(92) << char(92) << "=======================";
-        cout << " Tor 4: [ABBC]" << endl;
+        for (long long unsigned int i=0; i<cel4.size(); i++)
+        {
+            cout << cel4[i];
+        }
+        cout << " Tor 4: [ABCC]" << endl;
         cout << setw(31) << char(92) << char(92) << " (5)" << endl;
         cout << setw(32) << char(92) << char(92) << "=====================";
-        cout << " Tor 5: [CDD]" << endl;
-    }
-    void Rozgrywka() {
-        wynik = 0;
-    }
-    
-    void  AktualnyWynik() {
-        if (wynik >= 50) {
-            cout << "Gratulacje! Wygrałeś!" << wynik << endl;
+        for (long long unsigned int i=0; i<cel5.size(); i++)
+        {
+            cout << cel5[i];
         }
-        else if (wynik < 0) {
-            cout << "Przegrałeś. Twój wynik jest mniejszy niż 0." << wynik << endl;
+        cout << " Tor 5: [CDDA]" << endl;
+    }
+    void sterowanie()
+    {
+        wybor1 = _getch();
+
+        deque<char> *cel;
+
+        switch (wybor1)
+        {
+            case '2':
+                cel = &cel2;
+                break;
+            case '3':
+                cel = &cel3;
+                break;
+            case '4':
+                cel = &cel4;
+                break;
+            case '5':
+                cel = &cel5;
+                break;
+            case 'w':
+                cel= &cel1;
+                if(!pociag.empty())
+                {
+                    cel->push_front(pociag.back());
+                    pociag.pop_back();
+                    dostawa();
+                    sprawdzanie();
+                }
+                break;
+            case 'r':
+                system("cls");
+                main();
+                break;
+            case 'q':
+                exit(0);
+                break;
         }
-        else {
-            cout << "Twój aktualny wynik to: " << wynik << endl;
+
+        while (true)
+        {
+            system("cls");
+            wyswietlanie();
+
+            char wybor2;
+            wybor2 = _getch();
+
+            if (wybor2 == 'w' && !pociag.empty())
+            {
+                cel->push_front(pociag.back());
+                pociag.pop_back();
+                dostawa();
+                sprawdzanie();
+            }
+            else if ((wybor2 >= '2' && wybor2 <= '5') || wybor2 == 'r' || wybor2 == 'q')
+            {
+                wybor1 = wybor2;
+                switch (wybor1)
+                {
+                    case '2':
+                        cel = &cel2;
+                        break;
+                    case '3':
+                        cel = &cel3;
+                        break;
+                    case '4':
+                        cel = &cel4;
+                        break;
+                    case '5':
+                        cel = &cel5;
+                        break;
+                    case 'r':
+                    system("cls");
+                        main();
+                        break;
+                    case 'q':
+                        exit(0);
+                        break;
+                }
+            }
+            else
+            {
+                continue;
+            }
+            if (wybor2 == 'w')
+            {
+                cel = &cel1;
+            }
         }
     }
-    void PoprawneSkompletowanie() {
-        wynik += 10;
+
+void sprawdzanie()
+{
+    if (cel1.size() == 4)
+    {
+        bool rowne = true;
+        for (int i = 0; i < 4; i++)
+        {
+            if (cel1[i] != tor1[i])
+            {
+                rowne = false;
+                break;
+            }
+        }
+        if (rowne)
+        {
+            cel1.clear();
+            punkty += 10;
+        }
     }
-    void BledneSkompletowanie() {
-        wynik -= 10;
+        for (long long unsigned int i = 0; i < cel1.size(); i++)
+        {
+            if (cel1[i] != tor1[4+i-cel1.size()] && cel1[i] != ' ')
+            {
+                cel1.erase(cel1.begin() + i);
+                punkty -= 10;
+                break;
+            }
+        }
+
+    if (cel2.size() == 4)
+    {
+        bool rowne = true;
+        for (int i = 0; i < 4; i++)
+        {
+            if (cel2[i] != tor2[i])
+            {
+                rowne = false;
+                break;
+            }
+        }
+        if (rowne)
+        {
+            cel2.clear();
+            punkty += 10;
+        }
     }
+
+        for (long long unsigned int i = 0; i < cel2.size(); i++)
+        {
+            if (cel2[i] != tor2[4+i-cel2.size()] && cel2[i] != ' ')
+            {
+                cel2.erase(cel2.begin() + i);
+                punkty -= 10;
+                break;
+            }
+        }
+
+    if (cel3.size() == 4)
+    {
+        bool rowne = true;
+        for (int i = 0; i < 4; i++)
+        {
+            if (cel3[i] != tor3[i])
+            {
+                rowne = false;
+                break;
+            }
+        }
+        if (rowne)
+        {
+            cel3.clear();
+            punkty += 10;
+        }
+    }
+        for (long long unsigned int i = 0; i < cel3.size(); i++)
+        {
+            if (cel3[i] != tor3[4+i-cel3.size()] && cel3[i] != ' ')
+            {
+                cel3.erase(cel3.begin() + i);
+                punkty -= 10;
+                break;
+            }
+        }
+
+    if (cel4.size() == 4)
+    {
+        bool rowne = true;
+        for (int i = 0; i < 4; i++)
+        {
+            if (cel4[i] != tor4[i])
+            {
+                rowne = false;
+                break;
+            }
+        }
+        if (rowne)
+        {
+            cel4.clear();
+            punkty += 10;
+        }
+    }
+        for (long long unsigned int i = 0; i < cel4.size(); i++)
+        {
+            if (cel4[i] != tor4[4+i-cel4.size()] && cel4[i] != ' ')
+            {
+                cel4.erase(cel4.begin() + i);
+                punkty -= 10;
+                break;
+            }
+        }
+
+    if (cel5.size() == 4)
+    {
+        bool rowne = true;
+        for (int i = 0; i < 4; i++)
+        {
+            if (cel5[i] != tor5[i])
+            {
+                rowne = false;
+                break;
+            }
+        }
+        if (rowne)
+        {
+            cel5.clear();
+            punkty += 10;
+        }
+    }
+
+        for (long long unsigned int i = 0; i < cel5.size(); i++)
+        {
+            if (cel5[i] != tor5[4+i-cel5.size()] && cel5[i] != ' ')
+            {
+                cel5.erase(cel5.begin() + i);
+                punkty -= 10;
+                break;
+            }
+        }
+        if (punkty == 50)
+        {
+            system("cls");
+            wyswietlanie();
+            cout << "Wygrales!" << endl;
+            wybor1 = _getch();
+            switch (wybor1)
+            {
+                case 'r':
+                    system("cls");
+                    main();
+                    break;
+                case 'q':
+                    exit(0);
+                    break;
+            }
+        }
+        if (punkty < 0)
+        {
+            system("cls");
+            wyswietlanie();
+            cout << "Przegrales!" << endl;
+            wybor1 = _getch();
+            switch (wybor1)
+            {
+                case 'r':
+                    system("cls");
+                    main();
+                    break;
+                case 'q':
+                    exit(0);
+                    break;
+            }
+        }
+
+
+
+}
+
 };
 
 int main()
 {
-    deque<char> dany_pociag = { 'C', 'A', 'D', 'B' };
-    Stacja Kolejarz(dany_pociag);
+    Stacja Kolejarz;
     Kolejarz.generowanie();
     Kolejarz.wyswietlanie();
-    int opcja;
-  do {
-        cin >> opcja;
-
-        switch (opcja) {
-        case 2:
-            cout << "Wybrano opcję 2" << endl;
-            break;
-        case 3:
-            cout << "Wybrano opcję 3" << endl;
-            break;
-        case 4:
-            cout << "Wybrano opcję 4" << endl;
-            break;
-        case 5:
-            cout << "Wybrano opcję 5" << endl;
-            break;
-        case 0:
-            cout << "Koniec programu" << endl;
-            break;
-        default:
-            cout << "Nieprawidlowa opcja" << endl;
-            break;
-        }
-
-    } while (opcja != 0);
-    
+    Kolejarz.sterowanie();
     return 0;
 }
+
